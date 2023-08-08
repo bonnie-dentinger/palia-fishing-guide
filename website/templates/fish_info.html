@@ -1,0 +1,16 @@
+<p><strong>Name: </strong>{{fish.name}}</p>
+<p><strong>Location(s): </strong>{{fish.locations}}</p>
+<p><strong>Time(s) of Day: </strong>
+    {% if fish_times | length == 4 %}
+        All Day
+    {% else %}
+        {% for time in fish_times %}
+            {{time.time_of_day}}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+</p>
+<p><strong>Bait: </strong>{{fish.bait}}</p>
+<p><strong>Sells for: </strong>{{fish.sells_for}} gold</p>
+{% for key, value in entry_percents.items() %}
+    <p><strong>Percent chance to catch ({{key}}): </strong>{{value}}%</p>
+{% endfor %}

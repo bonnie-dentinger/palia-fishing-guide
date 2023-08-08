@@ -1,0 +1,80 @@
+<header>
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <span class="ms-2">Palia Fishing</span>
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="searchByName();">Search by fish</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="searchByLocation();">Search by location</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    <div id="main_screen">
+        <h3>Welcome! Please select a search method from the navigation bar to get started.</h3>
+    </div>
+    <div id="all_fish_info" style="display: none;">
+        <ul class="nav justify-content-center">
+            {% set alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+            {% for letter in alphabet %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="$('.tab-pane').hide();$('#{{letter}}').show();">{{ letter }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div id="fish_list">
+            <!-- show buttons for fish based off tab letter -->
+            {% for letter in alphabet %}
+                <div id="{{letter}}" class="tab-pane" style="display: none;">
+                    <div class="d-flex justify-content-center" style="flex-wrap: wrap;">
+                        {% for fish in fish_dict[letter] %}
+                            <button type="button" class="btn btn-outline-primary m-2" onclick='getFishInfo("{{fish.name}}");'>{{ fish.name }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="fish_info" style="display: none;">
+        </div>
+    </div>
+    <div id="all_location_info" style="display: none;">
+        <div class="d-flex justify-content-center">
+            {% for location in fishing_locations %}
+                <button type="button" class="btn btn-outline-primary m-2" onclick='getLocationInfo("{{location}}");'>{{ location }}</button>
+            {% endfor %}
+        </div>
+        <div id="location_info">
+        </div>
+    </div>
+</main>
+<style>
+    /* move navbar to the left */
+    .navbar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 15%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .navbar-brand {
+        cursor: default;
+    }
+    /* move main content to the right */
+    main {
+        position: absolute;
+        left: 15%;
+        top: 0;
+        width: 85%;
+        height: 100%;
+        overflow-y: scroll;
+        padding: 1rem;
+    }
+</style>

@@ -1,0 +1,124 @@
+<header>
+    <nav class="navbar bg-dark fixed-bottom" data-bs-theme="dark">
+        <div class="container-fluid" style="position: relative;">
+            <a class="navbar-brand" href="#">
+                <span class="ms-2">Palia Fishing</span>
+            </a>
+            <div class="search-circle">
+                <i class="fas fa-search fa-light" onclick="showOptions();"></i>
+            </div>
+            <div class="fish-circle" style="display: none;">
+                <i class="fas fa-light fa-fish" onclick="searchByName();"></i>
+            </div>
+            <div class="location-circle" style="display:none;">
+                <a class="fas fa-light fa-location-dot" onclick="searchByLocation();"></a>
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div id="main_screen">
+        <h3>Welcome! Please select a search method from the navigation bar to get started.</h3>
+    </div>
+    <div id="all_fish_info" style="display: none;">
+        <ul class="nav justify-content-center">
+            {% set alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+            {% for letter in alphabet %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="$('.tab-pane').hide();$('#{{letter}}').show();">{{ letter }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div id="fish_list">
+            <!-- show buttons for fish based off tab letter -->
+            {% for letter in alphabet %}
+                <div id="{{letter}}" class="tab-pane" style="display: none;">
+                    <div class="d-flex justify-content-center" style="flex-wrap: wrap;">
+                        {% for fish in fish_dict[letter] %}
+                            <button type="button" class="btn btn-sm btn-outline-primary m-1" onclick='getFishInfo("{{fish.name}}");'>{{ fish.name }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="fish_info" style="display: none;">
+        </div>
+    </div>
+    <div id="all_location_info" style="display: none;">
+        <div class="row row-cols-auto">
+            {% for location in fishing_locations %}
+                <div class="col">
+                    {% if location == 'Kilima Pond/Bahari Ponds' %}
+                        <button type="button" class="btn btn-sm btn-outline-primary m-1" onclick='getLocationInfo("{{location}}");' style="max-width: 100px;">Kilima / Bahari Ponds</button>
+                    {% else %}
+                        <button type="button" class="btn btn-sm btn-outline-primary m-1" onclick='getLocationInfo("{{location}}");' style="max-width: 100px;">{{ location }}</button>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <div id="location_info">
+        </div>
+    </div>
+</main>
+<script>
+    function showOptions() {
+        if ($('.fish-circle').hasClass('slide-up')) {
+            $('.fish-circle').removeClass('slide-up');
+            $('.location-circle').removeClass('slide-up-left');
+            setTimeout(function() {
+                $('.fish-circle').hide();
+                $('.location-circle').hide();
+            }, 500);
+            return;
+        }
+
+        $('.fish-circle').show();
+        $('.location-circle').show();
+        $('.fish-circle').addClass('slide-up');
+        $('.location-circle').addClass('slide-up-left');
+    }
+</script>
+<style>
+    .search-circle,
+    .location-circle,
+    .fish-circle {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 0;
+        margin: 1rem;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background-color: #343a40;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .search-circle {
+        z-index: 1;
+    }
+
+    .fa-search,
+    .fa-fish,
+    .fa-location-dot {
+        color: white;
+    }
+
+    .search-circle:hover,
+    .location-circle:hover,
+    .fish-circle:hover {
+        background-color: #6c757d;
+    }
+
+    .location-circle.slide-up-left {
+        right: 3.5rem;
+        bottom: 2.5rem;
+    }
+
+    .fish-circle.slide-up {
+        bottom: 4.5rem;
+    }
+</style>

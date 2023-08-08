@@ -1,0 +1,50 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="row row-cols-auto">
+    {% for entry, value in location_info.items() %}
+        <div class="col">
+            <canvas id="myChart{{entry}}" width="300" height="200"></canvas>
+            <script>
+                var ctx = document.getElementById('myChart{{entry}}').getContext('2d');
+                var labels = {{value['fish_names']|safe}};
+                var data = {{value['fish_percents']|safe}};
+                var myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.5)',
+                                'rgba(54, 162, 235, 0.5)',
+                                'rgba(255, 206, 86, 0.5)',
+                                'rgba(75, 192, 192, 0.5)',
+                                'rgba(153, 102, 255, 0.5)',
+                                'rgba(255, 159, 64, 0.5)',
+                                'rgba(255, 99, 132, 0.5)',
+                                'rgba(54, 162, 235, 0.5)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            },
+                            title: {
+                                display: true,
+                                text: '{{entry|safe}}'
+                            }
+                        }
+                    }
+                })
+            </script>
+        </div>
+    {% endfor %}
+</div>
