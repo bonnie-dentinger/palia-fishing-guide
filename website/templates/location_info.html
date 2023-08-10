@@ -1,4 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<p><i class="fas fa-exclamation" style="color:red;"></i> = No data has been recorded</p>
+<p><i class="fas fa-exclamation" style="color:orange;"></i> = Data is not strong enough to be reliable</p>
 <div class="row row-cols-auto justify-content-center">
     {% for entry, value in location_info.items() %}
         {% if loop.index0 % 3 == 0 %}
@@ -18,7 +20,13 @@
         {% else %}
             <div class="col">
         {% endif %}
-            <p class="text-center mt-2 mb-0">{{value['bait']}}</p>
+            <p class="text-center mt-2 mb-0">{{value['bait']}}
+                {% if value['total_caught'] == (value['fish_names'] | length) and not (value['location'] == 'Kilima Lake' and value['bait'] == 'No Bait') %}
+                <i class="fas fa-exclamation ms-2" style="color:red;"></i>
+                {% elif value['total_caught'] < 30 and not (value['location'] == 'Kilima Lake' and value['bait'] == 'No Bait') %}
+                <i class="fas fa-exclamation ms-2" style="color:orange;"></i>
+                {% endif %}
+            </p>
             <canvas id="myChart{{entry}}" width="300" height="200" style="max-height:200px;max-width:300px;"></canvas>
             <script>
                 var ctx = document.getElementById('myChart{{entry}}').getContext('2d');
