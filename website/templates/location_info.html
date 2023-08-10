@@ -1,8 +1,25 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<div class="row row-cols-auto">
+<div class="row row-cols-auto justify-content-center">
     {% for entry, value in location_info.items() %}
-        <div class="col">
-            <canvas id="myChart{{entry}}" width="300" height="200"></canvas>
+        {% if loop.index0 % 3 == 0 %}
+            <div class="col-12">
+                {% if value['time_of_day'] == 'Morning' %}
+                {% set icon = 'fa-sunrise' %}
+                {% elif value['time_of_day'] == 'Day' %}
+                {% set icon = 'fa-sun' %}
+                {% elif value['time_of_day'] == 'Evening' %}
+                {% set icon = 'fa-sunset' %}
+                {% elif value['time_of_day'] == 'Night' %}
+                {% set icon = 'fa-moon' %}
+                {% endif %}
+                <h3 class="text-center mt-3"><i class="fas fa-light {{icon}}"></i> {{value['time_of_day']}}<h3>
+            </div>
+            <div class="col">
+        {% else %}
+            <div class="col">
+        {% endif %}
+            <p class="text-center mt-2 mb-0">{{value['bait']}}</p>
+            <canvas id="myChart{{entry}}" width="300" height="200" style="max-height:200px;max-width:300px;"></canvas>
             <script>
                 var ctx = document.getElementById('myChart{{entry}}').getContext('2d');
                 var labels = {{value['fish_names']|safe}};
@@ -38,13 +55,18 @@
                                 position: 'right',
                             },
                             title: {
-                                display: true,
-                                text: '{{entry|safe}}'
+                                display: false,
                             }
                         }
                     }
                 })
             </script>
+            {% if loop.index0 % 3 == 2 %}
         </div>
+    </div>
+    <div class="row row-cols-auto justify-content-center">
+            {% else %}
+        </div>
+            {% endif %}
     {% endfor %}
 </div>

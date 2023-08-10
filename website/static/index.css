@@ -1,3 +1,10 @@
 body {
     font-family: 'Lexend Deca', sans-serif;
 }
+
+#location_info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

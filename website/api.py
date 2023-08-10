@@ -104,7 +104,7 @@ def get_location_info():
             fish_names.append(fish['name'])
             if entry['total_caught'] != 0:
                 fish_percents.append(round(fish['num_caught'] / entry['total_caught'] * 100, 2))
-
-        location_fish_info[entry['time_of_day'] + ' - ' + entry['bait']] = {'fish_names': fish_names, 'fish_percents': fish_percents}
+        bait = entry['bait'] if entry['bait'] != 'None' else 'No Bait'
+        location_fish_info[entry['time_of_day'] + ' - ' + bait] = {'fish_names': fish_names, 'fish_percents': fish_percents, 'total_caught': entry['total_caught'], 'time_of_day': entry['time_of_day'], 'bait': bait}
 
     return jsonify(render_template('location_info.html', location_info=location_fish_info, fish_names=fish_names))
