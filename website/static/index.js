@@ -11,7 +11,9 @@ function searchByLocation() {
     $('#all_location_info').show();
 }
 
-function getFishInfo(fish_name) {
+function getFishInfo(fish_name, index) {
+    $('.btn-outline-primary').removeClass('active');
+    $('#show_fish_' + index).addClass('active');
     $.ajax({
         url: '/api/get_fish_info?fish_name=' + fish_name,
         type: 'GET',
@@ -22,7 +24,9 @@ function getFishInfo(fish_name) {
     })
 }
 
-function getLocationInfo(location_name) {
+function getLocationInfo(location_name, index) {
+    $('.btn-outline-primary').removeClass('active');
+    $('#show_location_' + index).addClass('active');
     $.ajax({
         url: '/api/get_location_info?location_name=' + location_name,
         type: 'GET',

@@ -47,7 +47,7 @@
                 <div id="{{letter}}" class="tab-pane" style="display: none;">
                     <div class="d-flex justify-content-center" style="flex-wrap: wrap;">
                         {% for fish in fish_dict[letter] %}
-                            <button type="button" class="btn btn-outline-primary m-2" onclick='getFishInfo("{{fish.name}}");'>{{ fish.name }}</button>
+                            <button id="show_fish_{{loop.index0}}" type="button" class="btn btn-outline-primary m-2" onclick='getFishInfo("{{fish.name}}", "{{loop.index0}}");'>{{ fish.name }}</button>
                         {% endfor %}
                     </div>
                 </div>
@@ -59,7 +59,7 @@
     <div id="all_location_info" style="display: none;">
         <div class="d-flex justify-content-center">
             {% for location in fishing_locations %}
-                <button type="button" class="btn btn-outline-primary m-2" onclick='getLocationInfo("{{location}}");'>{{ location }}</button>
+                <button id="show_location_{{loop.index0}}" type="button" class="btn btn-outline-primary m-2" onclick='getLocationInfo("{{location}}", "{{loop.index0}}");'>{{ location }}</button>
             {% endfor %}
         </div>
         <div id="location_info">
