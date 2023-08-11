@@ -1,16 +1,71 @@
-<p><strong>Name: </strong>{{fish.name}}</p>
-<p><strong>Location(s): </strong>{{fish.locations}}</p>
-<p><strong>Time(s) of Day: </strong>
-    {% if fish_times | length == 4 %}
-        All Day
+
+<div style="position: relative;width:min-content;margin:0 auto;">
+    {% if fish.locations != 'Kilima Pond/Bahari Ponds' %}
+    <img id="location_img" src="/static/images/{{fish.locations}}.png" alt="Location" style="height: 80vh;border-radius:10px;"/>
     {% else %}
-        {% for time in fish_times %}
-            {{time.time_of_day}}{% if not loop.last %}, {% endif %}
-        {% endfor %}
+    <img id="location_img" src="/static/images/Ponds/Bahari Ponds.png" alt="Location" style="height: 80vh;border-radius:10px;"/>
     {% endif %}
-</p>
-<p><strong>Bait: </strong>{{fish.bait}}</p>
-<p><strong>Sells for: </strong>{{fish.sells_for}} gold</p>
-{% for key, value in entry_percents.items() %}
-    <p><strong>Percent chance to catch ({{key}}): </strong>{{value}}%</p>
-{% endfor %}
+    <div class="fish-info">
+        <p class="fish-name mb-0 text-end"><strong></strong>{{fish.name}}</p>
+        {% for time in fish_times %}
+            {% if time.time_of_day == 'Morning' %}
+                {% set icon = 'fa-sunrise' %}
+                {% set color = '#F5947B' %}
+            {% elif time.time_of_day == 'Day' %}
+                {% set icon = 'fa-sun' %}
+                {% set color = '#F7C9A5' %}
+            {% elif time.time_of_day == 'Evening' %}
+                {% set icon = 'fa-sunset' %}
+                {% set color = '#DC717B' %}
+            {% elif time.time_of_day == 'Night' %}
+                {% set icon = 'fa-moon me-1' %}
+                {% set color = '#957A8A' %}
+            {% endif %}
+            <p class="mb-0" style="color: white;"><i class="fas fa-light {{icon}} p-2" style="color: {{color}};font-size: 1.5em;"></i>
+            {% for key, value in entry_percents.items() %}
+                {% if key == time.time_of_day %}
+                    {{value}}%</p>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        {% if fish.bait != 'None' %}
+        <img src="/static/images/{{fish.bait}}.png" alt="{{fish.bait}}" style="height: 50px;">
+        {% endif %}
+        <p class="py-1 mb-0" style="color: white;"><img src="/static/images/coin.png" alt="Coin"> {{fish.sells_for}}</p>
+    </div>
+    {% if fish.locations == 'Kilima Pond/Bahari Ponds' %}
+    <button id="switch_loc_btn" class="btn btn-primary" style="position: absolute;bottom: 2%;left: 2%;" onclick="kilimaPonds();">Go to Kilima</button>
+    {% endif %}
+</div>
+<script>
+    function kilimaPonds() {
+        document.getElementById('location_img').src = '/static/images/Ponds/Kilima Ponds.png';
+        $('#switch_loc_btn').text('Go to Bahari');
+        $('#switch_loc_btn').attr('onclick', 'bahariPonds();');
+    }
+
+    function bahariPonds() {
+        document.getElementById('location_img').src = '/static/images/Ponds/Bahari Ponds.png';
+        $('#switch_loc_btn').text('Go to Kilima');
+        $('#switch_loc_btn').attr('onclick', 'kilimaPonds();');
+    }
+</script>
+<style>
+    .fish-info {
+        position: absolute;
+        top: 2%;
+        right: 2%;
+        background-color: rgba(0,30,54, 0.75    );
+        padding: 10px 15px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 150px !important;
+    }
+    .fish-name {
+        font-size: 1.5em;
+        color: white;
+    }
+</style>
