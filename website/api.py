@@ -99,7 +99,18 @@ def get_location_info():
         location_name = entry['location']
         time_of_day = entry['time_of_day']
         bait = entry['bait']
-        fish_query = db.fish_info.find({'locations': location_name, 'time_of_day': time_of_day, 'bait': bait})
+
+        # check cache for location, time of day, and bait
+        if entry['total_caught'] >= 30:
+            fish_query = cache.get(location_name + time_of_day + bait)
+            if fish_query is None:
+                fish_query = db.fish_info.find({'locations': location_name, 'time_of_day': time_of_day, 'bait': bait})
+                # convert cursor to list to store in cache
+                fish_query = list(fish_query)
+                cache.set(location_name + time_of_day + bait, fish_query, timeout=3600)
+        else:
+            fish_query = db.fish_info.find({'locations': location_name, 'time_of_day': time_of_day, 'bait': bait})
+
         for fish in fish_query:
             fish_names.append(fish['name'])
             if entry['total_caught'] != 0:
