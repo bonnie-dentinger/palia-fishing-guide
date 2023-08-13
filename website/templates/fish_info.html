@@ -28,9 +28,7 @@
                 {% endif %}
             {% endfor %}
         {% endfor %}
-        {% if fish.bait != 'None' %}
         <img src="/static/images/{{fish.bait}}.png" alt="{{fish.bait}}" style="height: 50px;">
-        {% endif %}
         <p class="py-1 mb-0" style="color: white;"><img src="/static/images/coin.png" alt="Coin"> {{fish.sells_for}}</p>
     </div>
     {% if fish.locations == 'Kilima Pond/Bahari Ponds' %}
@@ -55,7 +53,7 @@
         position: absolute;
         top: 2%;
         right: 2%;
-        background-color: rgba(0,30,54, 0.75    );
+        background-color: rgba(0,30,54, 0.75);
         padding: 10px 15px;
         border-radius: 10px;
         display: flex;
