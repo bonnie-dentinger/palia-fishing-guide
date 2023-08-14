@@ -1,5 +1,9 @@
 body {
     font-family: 'Lexend Deca', sans-serif;
+    background-image: url("/static/images/Einar.webp");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-attachment: fixed;
 }
 
 .clickable {

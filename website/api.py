@@ -121,9 +121,10 @@ def get_location_info():
             fish_query = db.fish_info.find({'locations': location_name, 'time_of_day': time_of_day, 'bait': bait})
 
         for fish in fish_query:
-            fish_names.append(fish['name'])
             if entry['total_caught'] != 0:
-                fish_percents.append(round(fish['num_caught'] / entry['total_caught'] * 100, 2))
+                percent = round(fish['num_caught'] / entry['total_caught'] * 100)
+                fish_percents.append(percent)
+                fish_names.append(fish['name'] + ' (' + str(percent) + '%)')
         bait = entry['bait']
         location_fish_info[entry['time_of_day'] + ' - ' + bait] = {'fish_names': fish_names, 'fish_percents': fish_percents, 'total_caught': entry['total_caught'], 'time_of_day': entry['time_of_day'], 'bait': bait, 'location': entry['location']}
 

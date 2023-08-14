@@ -1,12 +1,12 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="d-flex justify-content-center mb-3">
+    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#location_map">
+        <i class="fas fa-map-location-dot"></i> View Map
+    </button>
+</div>
+<p class="text-center"><i class="fas fa-exclamation" style="color:red;"></i> = No data has been recorded</p>
+<p class="text-center"><i class="fas fa-exclamation" style="color:orange;"></i> = Data is not strong enough to be reliable</p>
 <div class="info-background">
-    <div class="d-flex justify-content-center mb-3">
-        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#location_map">
-            <i class="fas fa-map-location-dot"></i> View Map
-        </button>
-    </div>
-    <p class="text-center"><i class="fas fa-exclamation" style="color:red;"></i> = No data has been recorded</p>
-    <p class="text-center"><i class="fas fa-exclamation" style="color:orange;"></i> = Data is not strong enough to be reliable</p>
     <div class="row row-cols-auto justify-content-center">
         {% for entry, value in location_info.items() %}
             {% if loop.index0 % 3 == 0 %}
@@ -33,7 +33,7 @@
                     <i class="fas fa-exclamation ms-2" style="color:orange;"></i>
                     {% endif %}
                 </p>
-                <canvas id="myChart{{entry}}" width="300" height="125" style="max-height:125px;max-width:300px;"></canvas>
+                <canvas id="myChart{{entry}}" width="350" height="125" style="max-height:125px;max-width:350px;"></canvas>
                 <script>
                     var ctx = document.getElementById('myChart{{entry}}').getContext('2d');
                     var labels = {{value['fish_names']|safe}};
@@ -64,7 +64,8 @@
                                     'rgba(255, 99, 132, 1)',
                                     'rgba(54, 162, 235, 1)'
                                 ],
-                                borderWidth: 1
+                                borderWidth: 1,
+                                pointStyle: 'circle',
                             }]
                         },
                         options: {
@@ -78,6 +79,7 @@
                                             size: 12,
                                             family: 'Lexend Deca'
                                         },
+                                        usePointStyle: true
                                     }
                                 },
                                 title: {
@@ -136,5 +138,6 @@
     .info-background {
         border-radius: 10px;
         padding: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
     }
 </style>
