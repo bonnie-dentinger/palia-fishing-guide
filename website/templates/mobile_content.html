@@ -25,7 +25,7 @@
         <p>If you would like to help with crowdsourcing this information, please download the app <a href="https://github.com/bonnie-dentinger/palia-fishing-ocr/releases/tag/v1.0.2">here</a>.</p>
         <p>If you have any questions, concerns, or suggestions, please contact me on Discord at .shelanoir</p>
         <p>All credits for the images and intellectual property of Palia go to Singularity 6.</p>
-        
+        <p class="text-muted">{{ total_fish }} fish have been recorded while pursuing our Oneness.</p>
     </div>
     <div id="all_fish_info" style="display: none;">
         <ul class="nav justify-content-center">
@@ -131,5 +131,13 @@
 
     main {
         padding: 1rem;
+    }
+
+    #main_screen,
+    #all_fish_info,
+    #all_location_info {
+        border-radius: 10px;
+        padding: 10px 25px 75px 25px;
+        background-color: rgba(255, 255, 255, 0.8);
     }
 </style>

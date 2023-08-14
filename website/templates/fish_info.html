@@ -1,10 +1,5 @@
 
 <div style="position: relative;width:min-content;margin:0 auto;">
-    {% if fish.locations != 'Kilima Pond/Bahari Ponds' %}
-    <img id="location_img" src="/static/images/{{fish.locations}}.png" alt="Location" style="height: 80vh;border-radius:10px;"/>
-    {% else %}
-    <img id="location_img" src="/static/images/Ponds/Kilima Ponds.png" alt="Location" style="height: 80vh;border-radius:10px;"/>
-    {% endif %}
     <div class="fish-info">
         <p class="fish-name mb-0 text-end"><strong></strong>{{fish.name}}</p>
         <img src="static/images/Fish/{{fish.name}}.webp" height="40"/> 
@@ -19,10 +14,10 @@
                 {% set icon = 'fa-sunset' %}
                 {% set color = '#DC717B' %}
             {% elif time.time_of_day == 'Night' %}
-                {% set icon = 'fa-moon me-1' %}
+                {% set icon = 'fa-moon' %}
                 {% set color = '#957A8A' %}
             {% endif %}
-            <p class="mb-0" style="color: white;"><i class="fas fa-light {{icon}} p-2" style="color: {{color}};font-size: 1.5em;"></i>
+            <p class="mb-0 text-center" style="color: white;"><i class="fas fa-light {{icon}} p-2" style="color: {{color}};font-size: 1.5em;"></i>
             {% for key, value in entry_percents.items() %}
                 {% if key == time.time_of_day %}
                     {{value}}%</p>
@@ -36,6 +31,12 @@
         {% endif %}
         <p class="py-1 mb-0" style="color: white;"><img src="/static/images/coin.png" alt="Coin"> {{fish.sells_for}}</p>
     </div>
+    {% if fish.locations != 'Kilima Pond/Bahari Ponds' %}
+    <img id="location_img" src="/static/images/{{fish.locations}}.png" alt="Location" style="border-radius:10px;"/>
+    {% else %}
+    <img id="location_img" src="/static/images/Ponds/Kilima Ponds.png" alt="Location" style="border-radius:10px;"/>
+    {% endif %}
+    
     {% if fish.locations == 'Kilima Pond/Bahari Ponds' %}
     <button id="switch_loc_btn" class="btn btn-primary" style="position: absolute;bottom: 2%;left: 2%;" onclick="bahariPonds();">Go to Bahari</button>
     {% endif %}
@@ -54,21 +55,47 @@
     }
 </script>
 <style>
-    .fish-info {
-        position: absolute;
-        top: 2%;
-        right: 2%;
-        background-color: rgba(0,30,54, 0.75);
-        padding: 10px 15px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-end;
-        width: 150px !important;
+    @media (max-width: 768px) {
+        #location_img {
+            height: 80vw !important;
+        }
+        .fish-info {
+            background-color: rgba(0, 30, 54, 0.75);
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100% !important;
+        }
+        .fish-name {
+            font-size: 1em;
+            color: white;
+        }
+
+        .fish-info p {
+            font-size: 0.75em;
+        }
     }
-    .fish-name {
-        font-size: 1.5em;
-        color: white;
+
+    @media (min-width: 769px) {
+        .fish-info {
+            position: absolute;
+            top: 2%;
+            right: 2%;
+            background-color: rgba(0,30,54, 0.75);
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 150px !important;
+        }
+        .fish-name {
+            font-size: 1.5em;
+            color: white;
+        }
     }
 </style>
