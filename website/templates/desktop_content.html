@@ -49,7 +49,7 @@
                 <div id="{{letter}}" class="tab-pane" style="display: none;">
                     <div class="d-flex justify-content-center" style="flex-wrap: wrap;">
                         {% for fish in fish_dict[letter] %}
-                            <button id="show_fish_{{loop.index0}}" type="button" class="btn btn-outline-primary m-2" onclick='getFishInfo("{{fish.name}}", "{{loop.index0}}");'>{{ fish.name }}</button>
+                            <button id="show_fish_{{loop.index0}}" type="button" class="btn btn-primary m-2" onclick='getFishInfo("{{fish.name}}", "{{loop.index0}}");'>{{ fish.name }}</button>
                         {% endfor %}
                     </div>
                 </div>
@@ -62,9 +62,9 @@
         <div class="d-flex justify-content-center">
             {% for location in fishing_locations %}
                 {% if location == 'Kilima Pond/Bahari Ponds' %}
-                    <button id="show_location_{{loop.index0}}" type="button" class="btn btn-outline-primary m-2" onclick='getLocationInfo("Ponds", "{{loop.index0}}");'>Ponds</button>
+                    <button id="show_location_{{loop.index0}}" type="button" class="btn btn-primary m-2" onclick='getLocationInfo("Ponds", "{{loop.index0}}");'>Ponds</button>
                 {% else %}
-                    <button id="show_location_{{loop.index0}}" type="button" class="btn btn-outline-primary m-2" onclick='getLocationInfo("{{location}}", "{{loop.index0}}");'>{{ location }}</button>
+                    <button id="show_location_{{loop.index0}}" type="button" class="btn btn-primary m-2" onclick='getLocationInfo("{{location}}", "{{loop.index0}}");'>{{ location }}</button>
                 {% endif %}
             {% endfor %}
         </div>

@@ -32,9 +32,9 @@
         <p class="py-1 mb-0" style="color: white;"><img src="/static/images/coin.png" alt="Coin"> {{fish.sells_for}}</p>
     </div>
     {% if fish.locations != 'Kilima Pond/Bahari Ponds' %}
-    <img id="location_img" src="/static/images/{{fish.locations}}.png" alt="Location" style="border-radius:10px;"/>
+    <img id="location_img" src="/static/images/{{fish.locations}}.webp" alt="Location" style="border-radius:10px;"/>
     {% else %}
-    <img id="location_img" src="/static/images/Ponds/Kilima Ponds.png" alt="Location" style="border-radius:10px;"/>
+    <img id="location_img" src="/static/images/Ponds/Kilima.webp" alt="Location" style="border-radius:10px;"/>
     {% endif %}
     
     {% if fish.locations == 'Kilima Pond/Bahari Ponds' %}
@@ -43,13 +43,13 @@
 </div>
 <script>
     function kilimaPonds() {
-        document.getElementById('location_img').src = '/static/images/Ponds/Kilima Ponds.png';
+        document.getElementById('location_img').src = '/static/images/Ponds/Kilima.webp';
         $('#switch_loc_btn').text('Go to Bahari');
         $('#switch_loc_btn').attr('onclick', 'bahariPonds();');
     }
 
     function bahariPonds() {
-        document.getElementById('location_img').src = '/static/images/Ponds/Bahari Ponds.png';
+        document.getElementById('location_img').src = '/static/images/Ponds/Bahari.webp';
         $('#switch_loc_btn').text('Go to Kilima');
         $('#switch_loc_btn').attr('onclick', 'kilimaPonds();');
     }
@@ -80,6 +80,9 @@
     }
 
     @media (min-width: 769px) {
+        #location_img {
+            height: 80vh !important;
+        }
         .fish-info {
             position: absolute;
             top: 2%;
@@ -92,6 +95,7 @@
             justify-content: space-between;
             align-items: flex-end;
             width: 150px !important;
+            height:
         }
         .fish-name {
             font-size: 1.5em;

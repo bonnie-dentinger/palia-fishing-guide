@@ -77,7 +77,7 @@
                                     labels: {
                                         font: {
                                             size: 12,
-                                            family: 'Lexend Deca'
+                                            family: 'Quicksand'
                                         },
                                         usePointStyle: true
                                     }
@@ -109,9 +109,9 @@
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
                     {% if location == 'Kilima Pond/Bahari Ponds' %}
-                    <img src="/static/images/Ponds/Kilima Ponds.png" id="loc_map" class="img-fluid" alt="Map of {{location}}">
+                    <img src="/static/images/Ponds/Kilima.webp" id="loc_map" class="img-fluid" alt="Map of {{location}}">
                     {% else %}
-                    <img src="/static/images/{{location}}.png" id="loc_map" class="img-fluid" alt="Map of {{location}}">
+                    <img src="/static/images/{{location}}.webp" id="loc_map" class="img-fluid" alt="Map of {{location}}">
                     {% endif %}
                     {% if location == 'Kilima Pond/Bahari Ponds' %}
                     <button id="switch_loc_btn_loc" class="btn btn-primary" style="position: absolute;bottom: 2%;left: 2%;" onclick="bahariPonds();">Go to Bahari</button>
@@ -123,13 +123,13 @@
 </div>
 <script>
     function kilimaPonds() {
-        document.getElementById('loc_map').src = '/static/images/Ponds/Kilima Ponds.png';
+        document.getElementById('loc_map').src = '/static/images/Ponds/Kilima.webp';
         $('#switch_loc_btn_loc').text('Go to Bahari');
         $('#switch_loc_btn_loc').attr('onclick', 'bahariPonds();');
     }
 
     function bahariPonds() {
-        document.getElementById('loc_map').src = '/static/images/Ponds/Bahari Ponds.png';
+        document.getElementById('loc_map').src = '/static/images/Ponds/Bahari.webp';
         $('#switch_loc_btn_loc').text('Go to Kilima');
         $('#switch_loc_btn_loc').attr('onclick', 'kilimaPonds();');
     }
