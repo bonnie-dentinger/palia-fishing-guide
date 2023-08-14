@@ -28,7 +28,7 @@ Eyeless Minnow,All Day,Bahari Caves,None,20
 Fairy Carp,Morning/Evening,Kilima Pond/Bahari Ponds,Worm,145
 Fathead Minnow,All Day,Bahari Rivers,Glow Worm,80
 Flametongue Ray,Morning/Day,Kilima Rivers,Glow Worm,0
-Freshwater Eel,Morning/Night,Kilima Rivers,Worm,70
+Freshwater Eel,Morning/Evening/Night,Kilima Rivers,Worm,70
 Giant Goldfish,All Day,Kilima Pond/Bahari Ponds,Glow Worm,0
 Giant Kilima Stingray,Morning/Evening,Kilima Lake,Glow Worm,0
 Gillyfin,All Day,Kilima Lake,None,20

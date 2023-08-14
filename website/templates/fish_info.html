@@ -7,6 +7,7 @@
     {% endif %}
     <div class="fish-info">
         <p class="fish-name mb-0 text-end"><strong></strong>{{fish.name}}</p>
+        <img src="static/images/Fish/{{fish.name}}.webp" height="40"/> 
         {% for time in fish_times %}
             {% if time.time_of_day == 'Morning' %}
                 {% set icon = 'fa-sunrise' %}

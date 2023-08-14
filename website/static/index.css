@@ -2,6 +2,10 @@ body {
     font-family: 'Lexend Deca', sans-serif;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 #location_info {
     display: flex;
     justify-content: center;
