@@ -3,7 +3,7 @@
     {% if fish.locations != 'Kilima Pond/Bahari Ponds' %}
     <img id="location_img" src="/static/images/{{fish.locations}}.png" alt="Location" style="height: 80vh;border-radius:10px;"/>
     {% else %}
-    <img id="location_img" src="/static/images/Ponds/Bahari Ponds.png" alt="Location" style="height: 80vh;border-radius:10px;"/>
+    <img id="location_img" src="/static/images/Ponds/Kilima Ponds.png" alt="Location" style="height: 80vh;border-radius:10px;"/>
     {% endif %}
     <div class="fish-info">
         <p class="fish-name mb-0 text-end"><strong></strong>{{fish.name}}</p>
@@ -29,11 +29,15 @@
                 {% endif %}
             {% endfor %}
         {% endfor %}
-        <img src="/static/images/{{fish.bait}}.png" alt="{{fish.bait}}" style="height: 50px;">
+        {% if fish.bait != 'None' %}
+        <img src="/static/images/{{fish.bait}}.webp" alt="{{fish.bait}}" height="40">
+        {% else %}
+        <img src="/static/images/None.png" alt="None" height="40">
+        {% endif %}
         <p class="py-1 mb-0" style="color: white;"><img src="/static/images/coin.png" alt="Coin"> {{fish.sells_for}}</p>
     </div>
     {% if fish.locations == 'Kilima Pond/Bahari Ponds' %}
-    <button id="switch_loc_btn" class="btn btn-primary" style="position: absolute;bottom: 2%;left: 2%;" onclick="kilimaPonds();">Go to Kilima</button>
+    <button id="switch_loc_btn" class="btn btn-primary" style="position: absolute;bottom: 2%;left: 2%;" onclick="bahariPonds();">Go to Bahari</button>
     {% endif %}
 </div>
 <script>
