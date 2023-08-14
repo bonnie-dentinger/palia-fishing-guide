@@ -14,6 +14,7 @@ function searchByLocation() {
 function getFishInfo(fish_name, index) {
     $('.btn-outline-primary').removeClass('active');
     $('#show_fish_' + index).addClass('active');
+    $('#fish_info').html('');
     $.ajax({
         url: '/api/get_fish_info?fish_name=' + fish_name,
         type: 'GET',
@@ -27,6 +28,7 @@ function getFishInfo(fish_name, index) {
 function getLocationInfo(location_name, index) {
     $('.btn-outline-primary').removeClass('active');
     $('#show_location_' + index).addClass('active');
+    $('#location_info').html('');
     $.ajax({
         url: '/api/get_location_info?location_name=' + location_name,
         type: 'GET',

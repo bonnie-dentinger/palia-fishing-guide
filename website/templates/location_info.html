@@ -1,5 +1,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="info-background">
+    <div class="d-flex justify-content-center mb-3">
+        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#location_map">
+            <i class="fas fa-map-location-dot"></i> View Map
+        </button>
+    </div>
     <p class="text-center"><i class="fas fa-exclamation" style="color:red;"></i> = No data has been recorded</p>
     <p class="text-center"><i class="fas fa-exclamation" style="color:orange;"></i> = Data is not strong enough to be reliable</p>
     <div class="row row-cols-auto justify-content-center">
@@ -92,6 +97,41 @@
         {% endfor %}
     </div>
 </div>
+<div class="modal fade" tab-index="-1" id="location_map" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center">{{location}}</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    {% if location == 'Kilima Pond/Bahari Ponds' %}
+                    <img src="/static/images/Ponds/Kilima Ponds.png" id="loc_map" class="img-fluid" alt="Map of {{location}}">
+                    {% else %}
+                    <img src="/static/images/{{location}}.png" id="loc_map" class="img-fluid" alt="Map of {{location}}">
+                    {% endif %}
+                    {% if location == 'Kilima Pond/Bahari Ponds' %}
+                    <button id="switch_loc_btn_loc" class="btn btn-primary" style="position: absolute;bottom: 2%;left: 2%;" onclick="bahariPonds();">Go to Bahari</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function kilimaPonds() {
+        document.getElementById('loc_map').src = '/static/images/Ponds/Kilima Ponds.png';
+        $('#switch_loc_btn_loc').text('Go to Bahari');
+        $('#switch_loc_btn_loc').attr('onclick', 'bahariPonds();');
+    }
+
+    function bahariPonds() {
+        document.getElementById('loc_map').src = '/static/images/Ponds/Bahari Ponds.png';
+        $('#switch_loc_btn_loc').text('Go to Kilima');
+        $('#switch_loc_btn_loc').attr('onclick', 'kilimaPonds();');
+    }
+</script>
 <style>
     .info-background {
         border-radius: 10px;

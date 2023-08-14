@@ -92,73 +92,39 @@ def get_fish_info():
 
     return jsonify(render_template('fish_info.html', fish=f, fish_times=fish_times, entry_percents=entry_percents))
 
-# @api.route('/get_location_info', methods=['GET'])
-# def get_location_info():
-#     location = request.args.get('location_name')
-#     if location is None:
-#         return Response(status=400)
-    
-#     location_info = db.fishing_locations.find({'location': location})
-#     location_fish_info = {}
-#     for entry in location_info:
-#         fish_names = []
-#         fish_percents = []
-#         location_name = entry['location']
-#         time_of_day = entry['time_of_day']
-#         bait = entry['bait']
-
-#         # check cache for location, time of day, and bait
-#         if entry['total_caught'] >= 30:
-#             fish_query = cache.get(location_name + time_of_day + bait)
-#             if fish_query is None:
-#                 fish_query = db.fish_info.find({'locations': location_name, 'time_of_day': time_of_day, 'bait': bait})
-#                 # convert cursor to list to store in cache
-#                 fish_query = list(fish_query)
-#                 cache.set(location_name + time_of_day + bait, fish_query, timeout=3600)
-#         else:
-#             fish_query = db.fish_info.find({'locations': location_name, 'time_of_day': time_of_day, 'bait': bait})
-
-#         for fish in fish_query:
-#             fish_names.append(fish['name'])
-#             if entry['total_caught'] != 0:
-#                 fish_percents.append(round(fish['num_caught'] / entry['total_caught'] * 100, 2))
-#         bait = entry['bait']
-#         location_fish_info[entry['time_of_day'] + ' - ' + bait] = {'fish_names': fish_names, 'fish_percents': fish_percents, 'total_caught': entry['total_caught'], 'time_of_day': entry['time_of_day'], 'bait': bait, 'location': entry['location']}
-
-#     return jsonify(render_template('location_info_new.html', location_info=location_fish_info, fish_names=fish_names, location=location))
-
 @api.route('/get_location_info', methods=['GET'])
 def get_location_info():
     location = request.args.get('location_name')
     if location is None:
         return Response(status=400)
-    
     if location == 'Ponds':
         location = 'Kilima Pond/Bahari Ponds'
     
-    location_info = cache.get(location)
-    if location_info is None:
-        location_info = db.fishing_locations.find({'location': location})
-        location_info = list(location_info)
-        cache.set(location, location_info, timeout=3600)
-
-    fish_at_location = cache.get(location + '_fish')
-    if fish_at_location is None:
-        fish_at_location = db.fish_info.find({'locations': location})
-        fish_at_location.sort('bait', 1)
+    location_info = db.fishing_locations.find({'location': location})
+    location_fish_info = {}
+    for entry in location_info:
         fish_names = []
-        for fish in fish_at_location:
-            if fish['name'] not in fish_names:
-                fish_names.append(fish['name'])
-        fish_at_location = list(fish_names)
-        cache.set(location + '_fish', fish_at_location, timeout=3600)
+        fish_percents = []
+        location_name = entry['location']
+        time_of_day = entry['time_of_day']
+        bait = entry['bait']
 
-    fish_info = cache.get(location + '_fish_info')
-    if fish_info is None:
-        fish_info = {}
-        for fish in fish_at_location:
-            fish_query = db.fish_info.find({'name': fish})
-            fish_info[fish] = list(fish_query)
-        cache.set(location + '_fish_info', fish_info, timeout=3600)
-        
-    return jsonify(render_template('location_info_new.html', location=location, fish_at_location=fish_at_location, location_info=location_info, fish_info=fish_info))
+        # check cache for location, time of day, and bait
+        if entry['total_caught'] >= 30:
+            fish_query = cache.get(location_name + time_of_day + bait)
+            if fish_query is None:
+                fish_query = db.fish_info.find({'locations': location_name, 'time_of_day': time_of_day, 'bait': bait})
+                # convert cursor to list to store in cache
+                fish_query = list(fish_query)
+                cache.set(location_name + time_of_day + bait, fish_query, timeout=3600)
+        else:
+            fish_query = db.fish_info.find({'locations': location_name, 'time_of_day': time_of_day, 'bait': bait})
+
+        for fish in fish_query:
+            fish_names.append(fish['name'])
+            if entry['total_caught'] != 0:
+                fish_percents.append(round(fish['num_caught'] / entry['total_caught'] * 100, 2))
+        bait = entry['bait']
+        location_fish_info[entry['time_of_day'] + ' - ' + bait] = {'fish_names': fish_names, 'fish_percents': fish_percents, 'total_caught': entry['total_caught'], 'time_of_day': entry['time_of_day'], 'bait': bait, 'location': entry['location']}
+
+    return jsonify(render_template('location_info.html', location_info=location_fish_info, fish_names=fish_names, location=location))
