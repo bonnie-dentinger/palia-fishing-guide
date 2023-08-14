@@ -9,6 +9,13 @@ api = Blueprint('api', __name__)
 
 @api.route('/get_content', methods=['GET'])
 def get_content():
+    total_fish = cache.get('total_fish')
+    if total_fish is None:
+        total_fish = 0
+        # get total count of total_caught in every location
+        for location in db.fishing_locations.find():
+            total_fish += location['total_caught']
+        cache.set('total_fish', total_fish, timeout=3600)
     width = request.args.get('width')
     if width is None:
         return Response(status=400)
@@ -38,9 +45,9 @@ def get_content():
     fishing_locations.sort()
     
     if int(width) < 768:
-        return jsonify(render_template('mobile_content.html', fish_dict=fish_dict, fishing_locations=fishing_locations))
+        return jsonify(render_template('mobile_content.html', fish_dict=fish_dict, fishing_locations=fishing_locations, total_fish=total_fish))
     else:
-        return jsonify(render_template('desktop_content.html', fish_dict=fish_dict, fishing_locations=fishing_locations))
+        return jsonify(render_template('desktop_content.html', fish_dict=fish_dict, fishing_locations=fishing_locations, total_fish=total_fish))
 
 @api.route('/get_fish_info', methods=['GET'])
 def get_fish_info():
@@ -90,6 +97,8 @@ def get_location_info():
     location = request.args.get('location_name')
     if location is None:
         return Response(status=400)
+    if location == 'Ponds':
+        location = 'Kilima Pond/Bahari Ponds'
     
     location_info = db.fishing_locations.find({'location': location})
     location_fish_info = {}
@@ -115,7 +124,7 @@ def get_location_info():
             fish_names.append(fish['name'])
             if entry['total_caught'] != 0:
                 fish_percents.append(round(fish['num_caught'] / entry['total_caught'] * 100, 2))
-        bait = entry['bait'] if entry['bait'] != 'None' else 'No Bait'
+        bait = entry['bait']
         location_fish_info[entry['time_of_day'] + ' - ' + bait] = {'fish_names': fish_names, 'fish_percents': fish_percents, 'total_caught': entry['total_caught'], 'time_of_day': entry['time_of_day'], 'bait': bait, 'location': entry['location']}
 
-    return jsonify(render_template('location_info.html', location_info=location_fish_info, fish_names=fish_names))
+    return jsonify(render_template('location_info.html', location_info=location_fish_info, fish_names=fish_names, location=location))

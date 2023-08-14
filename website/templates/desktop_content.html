@@ -24,6 +24,7 @@
         <p>If you would like to help with crowdsourcing this information, please download the app <a href="https://github.com/bonnie-dentinger/palia-fishing-ocr/releases/tag/v1.0.2">here</a>.</p>
         <p>If you have any questions, concerns, or suggestions, please contact me on Discord at .shelanoir</p>
         <p>All credits for the images and intellectual property of Palia go to Singularity 6.</p>
+        <p class="text-muted">{{ total_fish }} fish have been recorded while pursuing our Oneness.</p>
         <script>
             kofiWidgetOverlay.draw('R6R3L1Y6X', {
                 'type': 'floating-chat',
@@ -60,7 +61,11 @@
     <div id="all_location_info" style="display: none;">
         <div class="d-flex justify-content-center">
             {% for location in fishing_locations %}
-                <button id="show_location_{{loop.index0}}" type="button" class="btn btn-outline-primary m-2" onclick='getLocationInfo("{{location}}", "{{loop.index0}}");'>{{ location }}</button>
+                {% if location == 'Kilima Pond/Bahari Ponds' %}
+                    <button id="show_location_{{loop.index0}}" type="button" class="btn btn-outline-primary m-2" onclick='getLocationInfo("Ponds", "{{loop.index0}}");'>Ponds</button>
+                {% else %}
+                    <button id="show_location_{{loop.index0}}" type="button" class="btn btn-outline-primary m-2" onclick='getLocationInfo("{{location}}", "{{loop.index0}}");'>{{ location }}</button>
+                {% endif %}
             {% endfor %}
         </div>
         <div id="location_info">
