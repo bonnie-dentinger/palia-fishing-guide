@@ -38,7 +38,7 @@ Hypnotic Moray,All Day,Bahari Caves,Glow Worm,205
 Indigo Lamprey,Evening/Night,Kilima Rivers,Glow Worm,115
 Kenli's Carp,All Day,Kilima Rivers,Glow Worm,205
 Kilima Catfish,All Day,Kilima Pond/Bahari Ponds,Worm,39
-Kilima Greyling,All Day,Kilima Rivers,Glow Worm,115
+Kilima Grayling,All Day,Kilima Rivers,Glow Worm,115
 Kilima Redfin,All Day,Bahari Rivers,Worm,35
 Largemouth Bass,All Day,Kilima Lake,Worm,33
 Long Nosed Unicorn Fish,Day,Bahari Coast,Glow Worm,410

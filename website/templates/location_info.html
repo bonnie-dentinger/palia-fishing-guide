@@ -1,11 +1,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<h3 class="mt-3">{{location}}</h3>
 <div class="d-flex justify-content-center mb-3">
     <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#location_map">
         <i class="fas fa-map-location-dot"></i> View Map
     </button>
 </div>
-<p class="text-center"><i class="fas fa-exclamation" style="color:red;"></i> = No data has been recorded</p>
-<p class="text-center"><i class="fas fa-exclamation" style="color:orange;"></i> = Data is not strong enough to be reliable</p>
+<p class="text-center"><i class="fas fa-exclamation" style="color:orange;"></i> = Indicates that data is not strong enough to be reliable for location/time/bait.</p>
 <div class="info-background">
     <div class="row row-cols-auto justify-content-center">
         {% for entry, value in location_info.items() %}
@@ -27,9 +27,7 @@
                 <div class="col">
             {% endif %}
                 <p class="text-center mt-2 mb-0">{{value['bait']}}
-                    {% if value['total_caught'] == (value['fish_names'] | length) and not (value['location'] == 'Kilima Lake' and value['bait'] == 'No Bait') %}
-                    <i class="fas fa-exclamation ms-2" style="color:red;"></i>
-                    {% elif value['total_caught'] < 30 and not (value['location'] == 'Kilima Lake' and value['bait'] == 'No Bait') %}
+                    {% if value['total_caught'] < 30 and not (value['location'] == 'Kilima Lake' and value['bait'] == 'None') %}
                     <i class="fas fa-exclamation ms-2" style="color:orange;"></i>
                     {% endif %}
                 </p>
@@ -135,9 +133,4 @@
     }
 </script>
 <style>
-    .info-background {
-        border-radius: 10px;
-        padding: 10px;
-        background-color: rgba(255, 255, 255, 0.8);
-    }
 </style>
