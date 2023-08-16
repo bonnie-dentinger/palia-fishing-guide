@@ -3,12 +3,21 @@ function searchByName() {
     $('#main_screen').hide();
     $('#all_fish_info').show();
     $('#all_location_info').hide();
+    $('#tips_and_tricks').hide();
 }
 
 function searchByLocation() {
     $('#main_screen').hide();
     $('#all_fish_info').hide();
     $('#all_location_info').show();
+    $('#tips_and_tricks').hide();
+}
+
+function showTips() {
+    $('#main_screen').hide();
+    $('#all_fish_info').hide();
+    $('#all_location_info').hide();
+    $('#tips_and_tricks').show();
 }
 
 function getFishInfo(fish_name, index) {

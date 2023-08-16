@@ -11,6 +11,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="searchByLocation();">Search by location</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showTips();">Tips and Tricks</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -71,6 +74,10 @@
         <div id="location_info">
         </div>
     </div>
+    <div id="tips_and_tricks" style="display: none;">
+        
+        {% include "/tips_and_tricks.html" %}
+    </div>
 </main>
 <style>
     /* move navbar to the left */
@@ -100,9 +107,13 @@
     }
     #main_screen,
     #all_fish_info,
-    #all_location_info {
+    #all_location_info,
+    #tips_and_tricks {
         border-radius: 10px;
         padding: 10px 25px 75px 25px;
         background-color: rgba(255, 255, 255, 0.8);
+    }
+    #main_screen {
+        width: fit-content;
     }
 </style>
