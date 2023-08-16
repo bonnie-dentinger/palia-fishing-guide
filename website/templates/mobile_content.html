@@ -10,8 +10,11 @@
             <div class="fish-circle" style="display: none;">
                 <i class="fas fa-light fa-fish" onclick="searchByName();"></i>
             </div>
-            <div class="location-circle" style="display:none;">
+            <div class="location-circle" style="display: none;">
                 <a class="fas fa-light fa-location-dot" onclick="searchByLocation();"></a>
+            </div>
+            <div class="tips-circle" style="display: none;">
+                <a class="fas fa-light fa-question" onclick="showTips();"></a>
             </div>
         </div>
     </nav>
@@ -66,29 +69,37 @@
         <div id="location_info" style="padding-bottom: 100px;">
         </div>
     </div>
+    <div id="tips_and_tricks" style="display: none;">
+        {% include "/tips_and_tricks.html" %}
+    </div>
 </main>
 <script>
     function showOptions() {
         if ($('.fish-circle').hasClass('slide-up')) {
             $('.fish-circle').removeClass('slide-up');
             $('.location-circle').removeClass('slide-up-left');
+            $('.tips-circle').removeClass('slide-left');
             setTimeout(function() {
                 $('.fish-circle').hide();
                 $('.location-circle').hide();
+                $('.tips-circle').hide();
             }, 500);
             return;
         }
 
         $('.fish-circle').show();
         $('.location-circle').show();
+        $('.tips-circle').show();
         $('.fish-circle').addClass('slide-up');
         $('.location-circle').addClass('slide-up-left');
+        $('.tips-circle').addClass('slide-left');
     }
 </script>
 <style>
     .search-circle,
     .location-circle,
-    .fish-circle {
+    .fish-circle,
+    .tips-circle {
         position: absolute;
         bottom: 0.5rem;
         right: 0;
@@ -110,13 +121,15 @@
 
     .fa-search,
     .fa-fish,
-    .fa-location-dot {
+    .fa-location-dot,
+    .fa-question {
         color: white;
     }
 
     .search-circle:hover,
     .location-circle:hover,
-    .fish-circle:hover {
+    .fish-circle:hover,
+    .tips-circle:hover {
         background-color: #6c757d;
     }
 
@@ -129,13 +142,19 @@
         bottom: 4.5rem;
     }
 
+    .tips-circle.slide-left {
+        right: 3.5rem;
+        bottom: 6.5rem;
+    }
+
     main {
         padding: 1rem;
     }
 
     #main_screen,
     #all_fish_info,
-    #all_location_info {
+    #all_location_info,
+    #tips_and_tricks {
         border-radius: 10px;
         padding: 10px 25px 75px 25px;
         background-color: rgba(255, 255, 255, 0.8);
