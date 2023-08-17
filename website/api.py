@@ -129,3 +129,27 @@ def get_location_info():
         location_fish_info[entry['time_of_day'] + ' - ' + bait] = {'fish_names': fish_names, 'fish_percents': fish_percents, 'total_caught': entry['total_caught'], 'time_of_day': entry['time_of_day'], 'bait': bait, 'location': entry['location']}
 
     return jsonify(render_template('location_info.html', location_info=location_fish_info, fish_names=fish_names, location=location))
+
+# for personal use. not used in website
+# @api.route('/manually_increment_fish', methods=['POST'])
+# def manually_increment_fish():
+#     data = request.form
+#     chosen_fish = data.get('fish')
+#     num_caught = data.get('num_caught')
+#     chosen_time_of_day = data.get('time')
+
+#     fish_query = db.fish_info.find_one({'name': chosen_fish, 'time_of_day': chosen_time_of_day})
+
+#     if fish_query is None:
+#         return Response(status=400)
+    
+#     location = fish_query['locations']
+#     bait = fish_query['bait']
+#     location_query = db.fishing_locations.find_one({'location': location, 'bait': bait, 'time_of_day': chosen_time_of_day})
+
+#     if location_query is None:
+#         return Response(status=400)
+    
+#     db.fish_info.update_one({'name': chosen_fish, 'time_of_day': chosen_time_of_day}, {'$inc': {'num_caught': int(num_caught)}})
+#     db.fishing_locations.update_one({'location': location, 'bait': bait, 'time_of_day': chosen_time_of_day}, {'$inc': {'total_caught': int(num_caught)}})
+#     return Response(status=200)

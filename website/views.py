@@ -10,3 +10,10 @@ views = Blueprint('views', __name__)
 #@cache.cached(timeout=3600, key_prefix='home')
 def home():
     return render_template('home.html')
+
+@views.route('/manual_increment', methods=['GET'])
+def manual_increment():
+    fish_list = db.fish_info.find().distinct('name')
+    times_of_day = ['Morning', 'Day', 'Evening', 'Night']
+
+    return render_template('manual_increment.html', fish_list=fish_list, times_of_day=times_of_day)
