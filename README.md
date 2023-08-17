@@ -1,1 +1,1 @@
-Website is [www.paliafishingguide.com](https://www.paliafishingguide.com)
+Website is [www.paliafishingguide.com](www.paliafishingguide.com)
