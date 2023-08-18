@@ -5,7 +5,6 @@
         <i class="fas fa-map-location-dot"></i> View Map
     </button>
 </div>
-<p class="text-center"><i class="fas fa-exclamation" style="color:orange;"></i> = Indicates that data is not strong enough to be reliable for location/time/bait.</p>
 <div class="info-background">
     <div class="row row-cols-auto justify-content-center">
         {% for entry, value in location_info.items() %}
@@ -26,11 +25,7 @@
             {% else %}
                 <div class="col">
             {% endif %}
-                <p class="text-center mt-2 mb-0">{{value['bait']}}
-                    {% if value['total_caught'] < 30 and not (value['location'] == 'Kilima Lake' and value['bait'] == 'None') %}
-                    <i class="fas fa-exclamation ms-2" style="color:orange;"></i>
-                    {% endif %}
-                </p>
+                <p class="text-center mt-2 mb-0">{{value['bait']}}</p>
                 <canvas id="myChart{{entry}}" width="350" height="125" style="max-height:125px;max-width:350px;"></canvas>
                 <script>
                     var ctx = document.getElementById('myChart{{entry}}').getContext('2d');
