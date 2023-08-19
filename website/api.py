@@ -4,7 +4,7 @@ import os
 from .database import db
 from .cache import cache
 import math as Math
-from .webpush_handler import trigger_push_notifications_for_subscriptions
+# from .webpush_handler import trigger_push_notifications_for_subscriptions
 
 api = Blueprint('api', __name__)
 
@@ -147,30 +147,31 @@ def get_location_info():
 
     return jsonify(render_template('location_info.html', location_info=location_fish_info, fish_names=fish_names, location=location))
 
-@api.route('/subscribe', methods=['POST'])
-def create_push_subscription():
-    data = request.get_json()
-    subscription = db.push_subscriptions.find_one({'subscription_json': data['subscription_json']})
-    if subscription is None:
-        db.push_subscriptions.insert_one(data)
-        subscription = db.push_subscriptions.find_one({'subscription_json': data['subscription_json']})
-    return jsonify({
-        'result': {
-            'status': 'success',
-            'subscription_json': subscription['subscription_json']
-        }
-    })
+# for push notifications if/when I implement them
+# @api.route('/subscribe', methods=['POST'])
+# def create_push_subscription():
+#     data = request.get_json()
+#     subscription = db.push_subscriptions.find_one({'subscription_json': data['subscription_json']})
+#     if subscription is None:
+#         db.push_subscriptions.insert_one(data)
+#         subscription = db.push_subscriptions.find_one({'subscription_json': data['subscription_json']})
+#     return jsonify({
+#         'result': {
+#             'status': 'success',
+#             'subscription_json': subscription['subscription_json']
+#         }
+#     })
 
-@api.route('/trigger-push-notifications', methods=['POST'])
-@csrf.exempt
-def trigger_push_notifications():
-    json_data = request.get_json()
-    subscriptions = db.push_subscriptions.find()
-    results = trigger_push_notifications_for_subscriptions(subscriptions, json_data['title'], json_data['body'])
-    return jsonify({
-        'status': 'success',
-        'result': results
-    })
+# @api.route('/trigger-push-notifications', methods=['POST'])
+# @csrf.exempt
+# def trigger_push_notifications():
+#     json_data = request.get_json()
+#     subscriptions = db.push_subscriptions.find()
+#     results = trigger_push_notifications_for_subscriptions(subscriptions, json_data['title'], json_data['body'])
+#     return jsonify({
+#         'status': 'success',
+#         'result': results
+#     })
 
 # for personal use. not used in website
 # @api.route('/manually_increment_fish', methods=['POST'])
