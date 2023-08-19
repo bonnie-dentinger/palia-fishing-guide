@@ -10,6 +10,11 @@ def create_app():
     SECRET_KEY = os.urandom(32)
     app.config['SECRET_KEY'] = SECRET_KEY
 
+    # for push notifications if/when I implement them
+    # app.config['VAPID_PRIVATE_KEY'] = os.getenv("VAPID_PRIVATE_KEY")
+    # app.config['VAPID_CLAIM_EMAIL'] = os.getenv("VAPID_CLAIM_EMAIL")
+    # app.config['VAPID_PUBLIC_KEY'] = os.getenv("VAPID_PUBLIC_KEY")
+
     csrf = CSRFProtect()
     csrf.init_app(app)
 

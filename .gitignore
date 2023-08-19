@@ -1,4 +1,8 @@
 /venv
 .env
 /website/__pycache__
-/templates/manual_increment.html
+/website/templates/manual_increment.html
+/website/static/register_service_worker.js
+/website/static/service_worker.js
+/website/templates/snackbar.html
+/website/webpush_handler.py

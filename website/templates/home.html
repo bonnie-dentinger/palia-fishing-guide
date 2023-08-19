@@ -16,7 +16,8 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/f34a3ea12f.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="static/index.css" />
-    <script src="static/index.js"></script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4236882632610494"
+    <script src="static/index.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4236882632610494"
         crossorigin="anonymous"></script>
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 </head>
@@ -27,7 +28,17 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous">
     </script>
-    <script>
+    <script type="text/javascript" src="/static/register_service_worker.js"></script>
+    <script type="text/javascript">
+        document.cookie = "csrf_token={{csrf_token()}};"
+
+        // for push notifications (not set up yet)
+        /* registerServiceWorker(
+            "/static/service_worker.js",
+            "{{config['VAPID_PUBLIC_KEY']}}",
+            "/api/subscribe"
+        ) */
+        
         $(document).ready(function () {
             getContent();
         });

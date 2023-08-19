@@ -27,10 +27,15 @@
             {% endif %}
                 <p class="text-center mt-2 mb-0">{{value['bait']}}</p>
                 <canvas id="myChart{{entry}}" width="350" height="125" style="max-height:125px;max-width:350px;"></canvas>
+                <p class="text-center text-muted mt-2" id="average{{entry}}"></p>
                 <script>
                     var ctx = document.getElementById('myChart{{entry}}').getContext('2d');
                     var labels = {{value['fish_names']|safe}};
                     var data = {{value['fish_percents']|safe}};
+                    var average = '{{value['sell_average']}}';
+
+                    document.getElementById('average{{entry}}').innerHTML = 'Average sell price: ' + average + ' <img src="/static/images/coin.png" alt="coin" style="width: 15px;height: 15px;">';
+
                     var myChart = new Chart(ctx, {
                         type: 'doughnut',
                         data: {

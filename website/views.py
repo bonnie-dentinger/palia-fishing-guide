@@ -1,5 +1,5 @@
 from flask_pymongo import PyMongo
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask, session
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask, session, current_app
 import os
 from .database import db
 from .cache import cache
@@ -9,7 +9,8 @@ views = Blueprint('views', __name__)
 @views.route('/')
 #@cache.cached(timeout=3600, key_prefix='home')
 def home():
-    return render_template('home.html')
+    config = current_app.config
+    return render_template('home.html', config=config)
 
 @views.route('/manual_increment', methods=['GET'])
 def manual_increment():
