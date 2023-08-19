@@ -1,11 +1,14 @@
 from flask_pymongo import PyMongo
-from flask import Blueprint, render_template, request, Response, jsonify
+from flask import Blueprint, render_template, request, Response, jsonify, current_app
 import os
 from .database import db
 from .cache import cache
 import math as Math
+from .webpush_handler import trigger_push_notifications_for_subscriptions
 
 api = Blueprint('api', __name__)
+
+csrf = current_app.extensions['csrf']
 
 @api.route('/get_content', methods=['GET'])
 def get_content():
@@ -108,6 +111,7 @@ def get_location_info():
         location_name = entry['location']
         time_of_day = entry['time_of_day']
         bait = entry['bait']
+        fish_sell_prices = []
 
         # check cache for location, time of day, and bait
         if entry['total_caught'] >= 30:
@@ -122,13 +126,51 @@ def get_location_info():
 
         for fish in fish_query:
             if entry['total_caught'] != 0:
+                percent_raw = round(fish['num_caught'] / entry['total_caught'], 2)
                 percent = round(fish['num_caught'] / entry['total_caught'] * 100)
                 fish_percents.append(percent)
                 fish_names.append(fish['name'] + ' (' + str(percent) + '%)')
+            fish_sell_prices.append(int(fish['sells_for']) * percent_raw)
+
+        sell_average = 0
+
+        if len(fish_sell_prices) != 0:
+            sell_average = round(sum(fish_sell_prices))
         bait = entry['bait']
-        location_fish_info[entry['time_of_day'] + ' - ' + bait] = {'fish_names': fish_names, 'fish_percents': fish_percents, 'total_caught': entry['total_caught'], 'time_of_day': entry['time_of_day'], 'bait': bait, 'location': entry['location']}
+        location_fish_info[entry['time_of_day'] + ' - ' + bait] = {'fish_names': fish_names,
+                                                                    'fish_percents': fish_percents,
+                                                                    'total_caught': entry['total_caught'],
+                                                                    'time_of_day': entry['time_of_day'],
+                                                                    'bait': bait,
+                                                                    'location': entry['location'],
+                                                                    'sell_average': sell_average}
 
     return jsonify(render_template('location_info.html', location_info=location_fish_info, fish_names=fish_names, location=location))
+
+@api.route('/subscribe', methods=['POST'])
+def create_push_subscription():
+    data = request.get_json()
+    subscription = db.push_subscriptions.find_one({'subscription_json': data['subscription_json']})
+    if subscription is None:
+        db.push_subscriptions.insert_one(data)
+        subscription = db.push_subscriptions.find_one({'subscription_json': data['subscription_json']})
+    return jsonify({
+        'result': {
+            'status': 'success',
+            'subscription_json': subscription['subscription_json']
+        }
+    })
+
+@api.route('/trigger-push-notifications', methods=['POST'])
+@csrf.exempt
+def trigger_push_notifications():
+    json_data = request.get_json()
+    subscriptions = db.push_subscriptions.find()
+    results = trigger_push_notifications_for_subscriptions(subscriptions, json_data['title'], json_data['body'])
+    return jsonify({
+        'status': 'success',
+        'result': results
+    })
 
 # for personal use. not used in website
 # @api.route('/manually_increment_fish', methods=['POST'])
